@@ -59,8 +59,9 @@ class reservation extends Model
             $q->where('id', $request->roomtype_id);
 
         })->whereDoesntHave('reservation', function ($q) use ($request) {
-            $q->where('checkin', '>=', $request->start_dt);
-            $q->where('checkout', '<=', $request->end_dt);
+            $q->where('checkin', '>=', date('Y-m-d', strtotime($request->start_dt)))
+                ->where('checkout', '<=', date('Y-m-d', strtotime($request->end_dt)));
+
         })->firstOrFail(); //Get the first available room that suits the user-input
 
         //If the room is available, make the booking. If it doesn't exist it's likely someone booked it before user
@@ -79,8 +80,8 @@ class reservation extends Model
             $customer->save();
 
             $reservation = new reservation;
-            $reservation->checkin = $request->start_dt;
-            $reservation->checkout = $request->end_dt;
+            $reservation->checkin = date('Y-m-d', strtotime($request->start_dt));
+            $reservation->checkout = date('Y-m-d', strtotime($request->end_dt));
             $reservation->room_id = $room->id; //save room_id
             $reservation->customer_id = $customer->id; //save customer ID that just was created
             $reservation->total_price = $days * $room->roomtype->base_price;

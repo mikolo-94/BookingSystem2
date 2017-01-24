@@ -44,6 +44,15 @@ Route::post('/createroomtype', [
     'as' => 'createRoomtype'
 ]);
 
+Route::get('/createrooms/{id}', [
+    'uses' => 'RoomController@createRoomspage',
+    'as' => 'createroomspage'
+]);
+
+Route::post('/docreaterooms', [
+    'uses' => 'RoomController@createRooms',
+    'as' => 'docreaterooms'
+]);
 
 
 Route::post('/searchresult', [
@@ -61,18 +70,4 @@ Route::post('/receipt', [
     'as' => 'receipt'
 ]);
 
-/*
-Route::post('/hotel/{name}/searchresult', [
-    'uses' => 'RoomTypeController@searchAvailability',
-    'as' => 'searchresult'
-]);
 
-Route::post('/hotel/{name}/receipt', [
-    'uses' => 'ReservationController@userBooking',
-    'as' => 'receipt'
-]);
-
-Route::post('/hotel/{name}/details', [
-    'uses' => 'ReservationController@BookingDetails',
-    'as' => 'bookingdetails'
-]); */

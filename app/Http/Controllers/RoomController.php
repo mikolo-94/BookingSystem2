@@ -10,13 +10,28 @@ use App\roomtype;
 
 use App\Http\Requests;
 use App\Http\Requests\searchAvailableRooms;
+use App\Http\Requests\CreateRooms;
+
 
 class RoomController extends Controller
 {
     public function searchAvailableRooms(searchAvailableRooms $request) {
-        $RoomsVacants  = Room::searchAvailableRooms($request);
-        return view('searchresult', ['roomsVacants' => $RoomsVacants, 'days' => $this->numberOfDays($request),
+     //   $RoomsVacants  = room::searchAvailableRooms($request);
+        return view('searchresult', ['roomsVacants' => room::searchAvailableRooms($request), 'days' => $this->numberOfDays($request),
             'start_dt' => $request->start_dt, 'end_dt' => $request->end_dt]);
+    }
+
+    public function createRoomspage($id) {
+
+        $rooms = roomtype::where('id', $id)->first();
+        //   $RoomsVacants  = room::searchAvailableRooms($request);
+        return view('createrooms', ['rooms' => $rooms, 'id' => $id]);
+    }
+
+    public function createRooms(CreateRooms $request) {
+
+        room::createRooms($request);
+        return redirect('/createroomtype');
     }
 
     public function numberOfDays($request) {
