@@ -22,37 +22,52 @@ Route::get('/searchroom', function () {
 Route::get('/roomtypes', [
     'uses' => 'RoomtypeController@loadRoomtypes',
     'as' => 'roomtypes'
-]);
+])->middleware('auth');
 
 Route::get('/calendar', function () {
     return view('calendar');
-});
+})->middleware('auth');
 
 Route::get('/calendarreservations', [
     'uses' => 'ReservationController@loadCalendarReservations',
     'as' => 'loadCalendarReservations'
-]);
+])->middleware('auth');
 
 Route::get('/calendarrooms', [
     'uses' => 'ReservationController@loadCalendarRooms',
     'as' => 'loadCalendarRooms'
-]);
+])->middleware('auth');
+
+Route::get('/futurereservations', [
+    'uses' => 'ReservationController@loadfutureReservations',
+    'as' => 'loadFutureReservations'
+])->middleware('auth');
+
+Route::get('/oldreservations', [
+    'uses' => 'ReservationController@loadOldReservations',
+    'as' => 'loadOldReservations'
+])->middleware('auth');
+
+Route::get('/deletereservation/{id}', [
+    'uses' => 'CustomerController@deleteCustomer',
+    'as' => 'deletereservation'
+])->middleware('auth');
 
 
 Route::post('/createroomtype', [
     'uses' => 'RoomtypeController@createRoomtype',
     'as' => 'createRoomtype'
-]);
+])->middleware('auth');
 
 Route::get('/createrooms/{id}', [
     'uses' => 'RoomController@createRoomspage',
     'as' => 'createroomspage'
-]);
+])->middleware('auth');
 
 Route::post('/docreaterooms', [
     'uses' => 'RoomController@createRooms',
     'as' => 'docreaterooms'
-]);
+])->middleware('auth');
 
 
 Route::post('/searchresult', [
@@ -71,3 +86,7 @@ Route::post('/receipt', [
 ]);
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');

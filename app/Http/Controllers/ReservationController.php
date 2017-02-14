@@ -26,11 +26,25 @@ class ReservationController extends Controller
     }
 
     public function loadCalendarReservations() {
+        //encoding to json to be able to display in fullcalendare
         return json_encode(reservation::loadCalendarReservations());
     }
 
     public function loadCalendarRooms() {
         return json_encode(reservation::loadCalendarRooms());
+    }
+
+    public function loadFutureReservations() {
+
+        $reservations = reservation::where('checkin', '>=', date("Y-m-d"))->get();
+        return view('futureReservations', ['reservations' => $reservations]);
+
+    }
+
+    public function loadOldReservations() {
+
+        $reservations = reservation::where('checkin', '<', date("Y-m-d"))->get();
+        return view('oldReservations', ['reservations' => $reservations]);
     }
 
 }

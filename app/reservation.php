@@ -23,6 +23,7 @@ class reservation extends Model
 
         $eventsJson = array();
 
+        //make a json array for fullcalendar, for displaying bookings
         foreach ($reservations as $reservation) {
             $eventsJson[] = array(
                 'id' => $reservation->id,
@@ -42,6 +43,7 @@ class reservation extends Model
 
         $roomsJson = array();
 
+        //make a json array for fullcalendar, for displaying rooms
         foreach ($rooms as $room) {
             $roomsJson[] = array(
                 'id' => $room->id,

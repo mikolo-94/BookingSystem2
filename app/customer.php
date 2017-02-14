@@ -10,4 +10,7 @@ class customer extends Model
     {
         return $this->hasOne('App\reservation');
     }
+
+
+
 }
